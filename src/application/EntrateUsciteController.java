@@ -7,6 +7,7 @@ package application;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -70,7 +71,8 @@ public class EntrateUsciteController
     	
     	Spesa s = new Spesa(tipo, titolo, data, descrizione, ammontare);
     	
-    	System.out.println("Sono nel controller");
+    	//Output di controllo
+    	//System.out.println("Sono nel controller");
     	boolean result = model.addSpesa(s);
     	
     	if (result)
@@ -86,7 +88,41 @@ public class EntrateUsciteController
     @FXML
     void onVisualizza(ActionEvent event) 
     {
-
+    	
+    	String tipo = txtTipo.getValue();
+    	txtRisultato.setText("");
+    	Double totale=(double) 0;
+    	
+    	if (tipo=="E")
+    	{
+    		List<Spesa> elenco = model.elencoEntrate();
+    	
+    		for (Spesa s:elenco)
+    		{
+    			
+    			txtRisultato.appendText(s.toString()+"\n");
+    			totale= totale + s.getAmmontare();
+    		}
+    		String totaleInLettere= totale.toString();
+    		txtRisultato.appendText("TOTALE ENTRATE = " + totaleInLettere);
+    	}
+    	else if (tipo=="U")
+    	{
+    		List<Spesa> elenco = model.elencoUscite();
+        	
+    		for (Spesa s:elenco)
+    		{
+    			txtRisultato.appendText(s.toString()+"\n");
+    			totale= totale + s.getAmmontare();
+    		}
+    		String totaleInLettere= totale.toString();
+    		txtRisultato.appendText("TOTALE USCITE = " + totaleInLettere);
+    	}
+    	else
+    	{
+    		txtRisultato.setText("Devi specificare che tipo di elenco vuoi");
+    	}
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

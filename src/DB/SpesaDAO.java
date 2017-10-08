@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import DB.DBConnect;
 import model.Spesa;
@@ -32,21 +34,30 @@ public class SpesaDAO
 		{
 			PreparedStatement st = conn.prepareStatement(in);
 			st.setString(1, s.getTitolo());
-			// st.setString(2, s.getData());
-			st.setString(3, s.getDescrizione());
+			
 			LocalDate data = s.getData();
-			System.out.println("Sono in SpesaDAO 1");
+			
+			//System.out.println("Sono in SpesaDAO 1");
+			
+			//Metodo 1 converto la data da LocalDate in String usando un formatter personalizzato
+			/*
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-		    String dataStringa = data.format(formatter);
-		        
-			st.setString(2, dataStringa);
+			String dataStringa = data.format(formatter);
+			*/
+			
+			// Metodo 2  converto la LocalDate a stringa in maniera semplice
+			String dataStringa1 = data.toString();
+			
+			st.setString(2, dataStringa1);
+			st.setString(3, s.getDescrizione());
 			st.setDouble(4, s.getAmmontare());
 			st.setString(5, s.getTipo());
-			System.out.println("Sono in SpesaDAO 2");
-			System.out.println(s.getTipo());
+			
+			//System.out.println("Sono in SpesaDAO 2");
+			//System.out.println(s.getTipo());
+			
 			int res = st.executeUpdate();
-			System.out.println("Sono in SpesaDAO 3");
+			//System.out.println("Sono in SpesaDAO 3");
 			
 			conn.close();
 			
@@ -69,7 +80,85 @@ public class SpesaDAO
 		
 	}
 	
+	public List<Spesa> getEntrate()
+	{
+		Connection conn = DBConnect.getConnection();
+		
+		/*
+		 String in = "SELECT * FROM movimenti WHERE tipo= "E"";
+		 */
+		
+		String sql = "SELECT * FROM movimenti WHERE tipo= 'E'";
+		
+		try 
+		{
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			ResultSet elencoEntrate = st.executeQuery();
+			
+			List<Spesa> entrate = new ArrayList<>();
+			
+			while (elencoEntrate.next())
+			{
+				Spesa sp = new Spesa(
+						elencoEntrate.getString("tipo"), 
+						elencoEntrate.getString("titolo"), 
+						elencoEntrate.getDate("data").toLocalDate(), 
+						elencoEntrate.getString("descrizione"),
+						elencoEntrate.getDouble("ammontare"));
+				entrate.add(sp);
+			}
+			
+			conn.close();
+			return entrate;
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
+	public List<Spesa> getUscite()
+	{
+		Connection conn = DBConnect.getConnection();
+		
+		/*
+		 String in = "SELECT * FROM movimenti WHERE tipo= "U"";
+		 */
+		
+		String sql = "SELECT * FROM movimenti WHERE tipo= 'U'";
+		
+		try 
+		{
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			ResultSet elencoEntrate = st.executeQuery();
+			
+			List<Spesa> entrate = new ArrayList<>();
+			
+			while (elencoEntrate.next())
+			{
+				Spesa sp = new Spesa(
+						elencoEntrate.getString("tipo"), 
+						elencoEntrate.getString("titolo"), 
+						elencoEntrate.getDate("data").toLocalDate(), 
+						elencoEntrate.getString("descrizione"),
+						elencoEntrate.getDouble("ammontare"));
+				entrate.add(sp);
+			}
+			
+			conn.close();
+			return entrate;
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	
