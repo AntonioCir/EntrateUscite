@@ -1,6 +1,7 @@
 package DB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import DB.DBConnect;
@@ -46,9 +46,12 @@ public class SpesaDAO
 			*/
 			
 			// Metodo 2  converto la LocalDate a stringa in maniera semplice
-			String dataStringa1 = data.toString();
+			//String dataStringa1 = data.toString();
+			//st.setString(2, dataStringa1);
 			
-			st.setString(2, dataStringa1);
+			// Metodo corretto
+			
+			st.setDate(2, Date.valueOf(data));
 			st.setString(3, s.getDescrizione());
 			st.setDouble(4, s.getAmmontare());
 			st.setString(5, s.getTipo());

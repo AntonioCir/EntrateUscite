@@ -4,6 +4,7 @@
 
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
@@ -12,11 +13,16 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.Model;
 import model.Spesa;
 
@@ -86,9 +92,30 @@ public class EntrateUsciteController
     }
 
     @FXML
-    void onVisualizza(ActionEvent event) 
+    void onVisualizza(ActionEvent event) throws Exception
     {
     	
+
+			Parent parent = new FXMLLoader().load(getClass().getResource("FinestraVisualizzazione.fxml"));
+			Stage stage = new Stage();
+			Scene scene = new Scene(parent);			
+			stage.setScene(scene);
+			stage.show();
+
+			
+			/*
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("EntrateUscite.fxml"));
+			BorderPane root = (BorderPane)loader.load();
+			EntrateUsciteController controller = loader.getController();
+			
+			Scene scene = new Scene(root,400,400);
+			
+			Model model = new Model();
+			controller.setModel(model);
+
+			*/
+			
+    	/*
     	String tipo = txtTipo.getValue();
     	txtRisultato.setText("");
     	Double totale=(double) 0;
@@ -122,7 +149,7 @@ public class EntrateUsciteController
     	{
     		txtRisultato.setText("Devi specificare che tipo di elenco vuoi");
     	}
-    	
+    	*/
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

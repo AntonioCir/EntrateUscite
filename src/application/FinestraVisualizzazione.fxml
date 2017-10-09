@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Visualizza">
+   <top>
+      <Label text="Finestra visualizzazione" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="39.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="142.0" text="Visualizza">
+                     <HBox.margin>
+                        <Insets left="10.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="txtTipo2" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <Button fx:id="btnVisualizza" alignment="CENTER" mnemonicParsing="false" onAction="#onVisualizza" text="Visualizza" textAlignment="RIGHT">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <TextArea fx:id="txtVisualizzazioni" prefHeight="190.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
